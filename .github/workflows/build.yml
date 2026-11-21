@@ -1,0 +1,64 @@
+name: Build & Release
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Dependências
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt pyinstaller
+
+      - name: Versão
+        id: ver
+        shell: bash
+        run: |
+          V=$(python -c "import mdlauncher; print(mdlauncher.__version__)")
+          echo "version=$V" >> "$GITHUB_OUTPUT"
+
+      - name: PyInstaller
+        run: >
+          pyinstaller --noconfirm --clean --windowed --name MDLauncher
+          --icon assets/icon.ico --add-data "assets;assets"
+          --exclude-module tkinter
+          --exclude-module PySide6.QtWebEngineCore --exclude-module PySide6.QtWebEngineWidgets
+          --exclude-module PySide6.Qt3DCore --exclude-module PySide6.QtQuick --exclude-module PySide6.QtQml
+          --exclude-module PySide6.QtMultimedia --exclude-module PySide6.QtCharts --exclude-module PySide6.QtDataVisualization
+          --exclude-module PySide6.QtPdf --exclude-module PySide6.QtSql --exclude-module PySide6.QtNetwork
+          run.py
+
+      - name: Inno Setup
+        run: |
+          choco install innosetup --no-progress -y
+          & "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe" /DAppVersion=${{ steps.ver.outputs.version }} installer\MDLauncher.iss
+
+      - name: Versão portátil (.zip)
+        shell: pwsh
+        run: Compress-Archive -Path dist\MDLauncher\* -DestinationPath "installer\Output\MDLauncher-${{ steps.ver.outputs.version }}-Portable.zip"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: MDLauncher-${{ steps.ver.outputs.version }}
+          path: installer/Output/*
+
+      - name: Publicar release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          name: MD Launcher ${{ steps.ver.outputs.version }}
+          body_path: RELEASE_NOTES.md
+          files: installer/Output/*
