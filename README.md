@@ -110,7 +110,8 @@ python run.py
 ### Gerar o executável
 
 O workflow [`build.yml`](.github/workflows/build.yml) faz o build no Windows com **PyInstaller** e
-**Inno Setup** e publica a release automaticamente quando uma tag `v*` é enviada:
+**Inno Setup** e anexa o instalador e o `.zip` portátil à release. Ele roda quando uma tag `v*` é enviada ou
+quando uma release é publicada no GitHub:
 
 ```bash
 git tag v1.0.1 && git push origin v1.0.1
