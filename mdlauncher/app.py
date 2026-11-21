@@ -48,8 +48,40 @@ def main() -> int:
     from .ui.main_window import MainWindow
     w = MainWindow()
     w.show()
+    if "--selftest" in sys.argv:
+        return _selftest(app, w)
     w.start()
     return app.exec()
+
+
+def _selftest(app, w) -> int:
+    """Abre a janela e os modais e sai — usado no CI para garantir que o .exe empacotado funciona."""
+    from PySide6.QtCore import QTimer
+
+    from . import metadata, scanner  # noqa: F401  (garante que os módulos entram no pacote)
+    from .storage import Game
+    from .ui.edit_modal import EditModal
+    from .ui.game_modal import GameModal
+    from .ui.settings_modal import SettingsModal, WizardModal
+
+    result = {"code": 1}
+
+    def run():
+        g = Game(id="selftest", name="Self Test", rom_path="selftest.md")
+        for cls, args in ((GameModal, (g, False)), (EditModal, (g, w.settings)),
+                          (SettingsModal, (w.settings,)), (WizardModal, (w.settings,))):
+            m = cls(w, *args)
+            m.open()
+            app.processEvents()
+            m.close_overlay()
+        w.grab()
+        result["code"] = 0
+        app.quit()
+
+    QTimer.singleShot(800, run)
+    QTimer.singleShot(20000, app.quit)
+    app.exec()
+    return result["code"]
 
 
 if __name__ == "__main__":

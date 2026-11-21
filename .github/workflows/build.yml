@@ -52,6 +52,14 @@ jobs:
           --exclude-module PySide6.QtPdf --exclude-module PySide6.QtSql --exclude-module PySide6.QtNetwork
           run.py
 
+      - name: Teste do executável
+        shell: pwsh
+        run: |
+          $env:MDLAUNCHER_HOME = "$env:RUNNER_TEMP\mdl-selftest"
+          $p = Start-Process -FilePath "dist\MDLauncher\MDLauncher.exe" -ArgumentList "--selftest" -Wait -PassThru
+          Write-Host "Saída: $($p.ExitCode)"
+          if ($p.ExitCode -ne 0) { exit 1 }
+
       - name: Inno Setup
         run: |
           choco install innosetup --no-progress -y
