@@ -101,15 +101,17 @@ def placeholder(name: str, w: int, h: int, dpr: float = 1.0) -> QPixmap:
     for y in range(0, h + step, step):
         p.drawLine(0, y, w, y)
     band = max(16, h // 9)
-    p.fillRect(QRectF(0, 0, w, band), QColor(theme.RED))
+    bg = QLinearGradient(0, 0, 0, band)
+    bg.setColorAt(0, QColor(theme.SILVER_HI))
+    bg.setColorAt(1, QColor("#a3b1c2"))
+    p.fillRect(QRectF(0, 0, w, band), bg)
     f = p.font()
     f.setBold(True)
-    f.setItalic(True)
     f.setPixelSize(max(9, int(band * 0.55)))
-    p.setFont(f)
-    p.setPen(QColor("white"))
-    p.drawText(QRectF(8, 0, w - 16, band), Qt.AlignVCenter | Qt.AlignLeft, "MEGA DRIVE")
     f.setItalic(False)
+    p.setFont(f)
+    p.setPen(QColor(theme.DARK_TEXT))
+    p.drawText(QRectF(8, 0, w - 16, band), Qt.AlignVCenter | Qt.AlignLeft, "MEGA DRIVE")
     f.setPixelSize(max(11, w // 11))
     p.setFont(f)
     p.setPen(QColor(235, 235, 240))
@@ -118,22 +120,20 @@ def placeholder(name: str, w: int, h: int, dpr: float = 1.0) -> QPixmap:
     return pm
 
 
-# --------------------------------------------------------------------------- fundo xadrez
+# --------------------------------------------------------------------------- fundo com grade
 _tile_cache: dict = {}
+GRID_STEP = 40
 
 
-def checker_brush(cell: int = 44) -> QBrush:
+def checker_brush(cell: int = GRID_STEP) -> QBrush:
+    """Ladrilho com uma linha horizontal e uma vertical: forma a grade das caixas de Mega Drive."""
     if cell not in _tile_cache:
-        pm = QPixmap(cell * 2, cell * 2)
-        pm.fill(QColor("#0b0b0e"))
+        pm = QPixmap(cell, cell)
+        pm.fill(QColor(theme.BG))
         p = QPainter(pm)
-        p.fillRect(0, 0, cell, cell, QColor("#111115"))
-        p.fillRect(cell, cell, cell, cell, QColor("#111115"))
-        p.setPen(QColor(255, 255, 255, 10))
-        p.drawLine(0, 0, cell * 2, 0)
-        p.drawLine(0, cell, cell * 2, cell)
-        p.drawLine(0, 0, 0, cell * 2)
-        p.drawLine(cell, 0, cell, cell * 2)
+        p.setPen(QColor(200, 210, 225, 15))
+        p.drawLine(0, 0, cell, 0)
+        p.drawLine(0, 0, 0, cell)
         p.end()
         _tile_cache[cell] = QBrush(pm)
     return _tile_cache[cell]
@@ -141,19 +141,10 @@ def checker_brush(cell: int = 44) -> QBrush:
 
 def paint_background(p: QPainter, rect) -> None:
     p.fillRect(rect, checker_brush())
-    # brilho vermelho discreto no topo + vinheta
-    g = QRadialGradient(rect.width() * 0.85, -rect.height() * 0.15, rect.width() * 0.75)
-    g.setColorAt(0, QColor(226, 35, 26, 34))
-    g.setColorAt(1, QColor(226, 35, 26, 0))
-    p.fillRect(rect, g)
-    v = QRadialGradient(rect.center(), max(rect.width(), rect.height()) * 0.75)
-    v.setColorAt(0.55, QColor(0, 0, 0, 0))
-    v.setColorAt(1, QColor(0, 0, 0, 170))
+    v = QRadialGradient(rect.center(), max(rect.width(), rect.height()) * 0.8)
+    v.setColorAt(0.6, QColor(0, 0, 0, 0))
+    v.setColorAt(1, QColor(0, 0, 0, 110))
     p.fillRect(rect, v)
-    lg = QLinearGradient(0, rect.height() - 160, 0, rect.height())
-    lg.setColorAt(0, QColor(0, 0, 0, 0))
-    lg.setColorAt(1, QColor(0, 0, 0, 120))
-    p.fillRect(rect, lg)
 
 
 # --------------------------------------------------------------------------- overlay modal

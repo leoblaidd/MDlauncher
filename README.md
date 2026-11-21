@@ -25,10 +25,11 @@ emulador favorito abre o jogo.
 
 ## Recursos
 
-- **Interface limpa, sem barra de título:** fundo xadrez escuro inspirado nas caixas de Mega Drive, botões de
-  fechar, minimizar e maximizar no canto superior esquerdo e o nome no canto direito. Para arrastar a janela,
-  puxe pelo topo; dois cliques maximizam. As bordas redimensionam.
-- **Grid de capas** com zoom ajustável pelo controle deslizante do dock.
+- **Interface limpa, sem barra de título:** fundo escuro com a grade discreta das caixas de Mega Drive e
+  paleta prata com tons azulados. As capas vão até as bordas da janela e passam por baixo do logo e do dock.
+- **Logo em caixa prata** no canto superior esquerdo: arraste para mover a janela, dois cliques maximizam.
+- **Botões minimizar, maximizar e fechar** no padrão do Windows, à direita, numa caixa prata escura.
+- **Grid de capas** com rolagem suave e zoom ajustável pelo controle deslizante do dock.
 - **Modal do jogo** com hero estilo Steam no topo, capa sobreposta, nome, data de lançamento, multiplayer,
   desenvolvedora e **contador de horas jogadas**.
 - **Botão Jogar + Tela cheia:** o botão de tela cheia adiciona o argumento certo para o seu emulador (veja a tabela).
@@ -42,10 +43,12 @@ emulador favorito abre o jogo.
 - **Editor completo:** nome, data, multiplayer, jogadores, desenvolvedora, tempo jogado, caminho da ROM/ZIP,
   emulador e argumentos específicos do jogo. Para as artes, escolha a fonte (SteamGridDB, IGDB ou Libretro),
   busque, veja as opções em miniatura e clique para definir. Também dá para usar um arquivo local.
-- **Dock estilo macOS:** adicionar jogo manualmente · abrir o emulador sem jogo · abrir a pasta de ROMs ·
+- **Dock flutuante com efeito de vidro** (as capas aparecem desfocadas por trás): pesquisa de jogos
+  (`Ctrl+F`) · adicionar jogo manualmente · abrir o emulador sem jogo · abrir a pasta de ROMs ·
   tamanho das capas · configurações.
 - **Menu de contexto** no grid (botão direito): jogar, editar, mostrar no Explorer, buscar artes de novo e remover.
 - **Assistente de primeira execução:** emulador → pasta de ROMs → chaves de API.
+- **Janela volta do jeito que estava** quando você sai do jogo, maximizada ou não.
 - **Instalador** que pergunta onde instalar, além de uma versão portátil em `.zip`.
 
 | Modal do jogo | Edição |
@@ -54,7 +57,7 @@ emulador favorito abre o jogo.
 
 ## Instalação
 
-1. Baixe o `MDLauncher-1.0.0-Setup.exe` na página de [Releases](https://github.com/leoblaidd/MDlauncher/releases/latest).
+1. Baixe o `MDLauncher-1.1.0-Setup.exe` na página de [Releases](https://github.com/leoblaidd/MDlauncher/releases/latest).
 2. Execute o instalador e escolha a pasta de instalação.
 3. Abra o MD Launcher. O assistente pede:
    - o **.exe do emulador**;

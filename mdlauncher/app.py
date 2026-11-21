@@ -38,7 +38,7 @@ def main() -> int:
     app.setFont(f)
 
     check = data_dir() / "check.png"
-    theme.pixmap("check", 14, "#ffffff", 1.0).save(str(check), "PNG")
+    theme.pixmap("check", 14, theme.DARK_TEXT, 1.0).save(str(check), "PNG")
     app.setStyleSheet(theme.QSS.replace(":/check", check.as_posix()))
 
     ico = resource("assets/icon.ico" if sys.platform.startswith("win") else "assets/icon.png")

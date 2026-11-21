@@ -99,12 +99,12 @@ class KeyFields(QWidget):
         self.sec.setEchoMode(QLineEdit.PasswordEchoOnEdit)
         self.sec.setPlaceholderText("Client Secret (Twitch)")
         f.addRow("SteamGridDB", self.sgdb)
-        f.addRow("", hint(f"Capas e heroes. Pegue sua chave grátis em <a style='color:#ff6b62' href='{LINK_SGDB}'>"
+        f.addRow("", hint(f"Capas e heroes. Pegue sua chave grátis em <a style='color:{theme.LINK}' href='{LINK_SGDB}'>"
                           "steamgriddb.com › Preferências › API</a>."))
         f.addRow("IGDB Client ID", self.cid)
         f.addRow("IGDB Secret", self.sec)
         f.addRow("", hint(f"Opcional: data de lançamento, multiplayer e artes extras. "
-                          f"<a style='color:#ff6b62' href='{LINK_IGDB}'>Como criar (Twitch Developers)</a>. "
+                          f"<a style='color:{theme.LINK}' href='{LINK_IGDB}'>Como criar (Twitch Developers)</a>. "
                           "Sem chaves, o launcher ainda busca capas no Libretro Thumbnails."))
 
     def apply(self, s: Settings):
@@ -250,8 +250,9 @@ class WizardModal(Overlay):
         p0 = QWidget()
         v0 = QVBoxLayout(p0)
         v0.addStretch(1)
-        logo = QLabel(f"<span style='color:{theme.RED}'>MD</span> Launcher")
-        logo.setStyleSheet("font-size: 44px; font-weight: 900; font-style: italic;")
+        logo = QLabel("MD Launcher")
+        logo.setStyleSheet(f"font-size: 30px; font-weight: 600; color: {theme.DARK_TEXT}; background: {theme.SILVER_GRAD};"
+                           " border: 1px solid #e4eaf1; border-radius: 14px; padding: 10px 26px;")
         v0.addWidget(logo, 0, Qt.AlignHCenter)
         t = QLabel("Sua coleção de Mega Drive com cara de biblioteca de verdade.")
         t.setStyleSheet(f"color: {theme.MUTED}; font-size: 15px;")
@@ -338,7 +339,7 @@ class WizardModal(Overlay):
             on = n == i
             done = n < i
             d.setStyleSheet(f"font-size: 12px; font-weight: 700; padding: 5px 12px; border-radius: 12px;"
-                            f"background: {'rgba(226,35,26,0.22)' if on else 'transparent'};"
+                            f"background: {'rgba(169,191,216,0.22)' if on else 'transparent'};"
                             f"color: {'#fff' if on else ('#d0d0d6' if done else '#6f6f79')};")
 
     def _count(self, path: str):
@@ -354,17 +355,17 @@ class WizardModal(Overlay):
             if p != self.roms.text():
                 return
             self.count.setText(f"<b style='color:#7ee787'>{n} jogo(s) de Mega Drive encontrados</b>" if n
-                               else "<span style='color:#ff8a80'>Nenhuma ROM de Mega Drive nessa pasta.</span>")
+                               else "<span style='color:#e6c07b'>Nenhuma ROM de Mega Drive nessa pasta.</span>")
 
         run_async(work, done)
 
     def _next(self):
         i = self.stack.currentIndex()
         if i == 1 and not self.emu.exe.text():
-            self.emu.info.setText("<span style='color:#ff8a80'>Escolha o .exe do emulador para continuar.</span>")
+            self.emu.info.setText("<span style='color:#e6c07b'>Escolha o .exe do emulador para continuar.</span>")
             return
         if i == 2 and not self.roms.text():
-            self.count.setText("<span style='color:#ff8a80'>Escolha a pasta das ROMs.</span>")
+            self.count.setText("<span style='color:#e6c07b'>Escolha a pasta das ROMs.</span>")
             return
         if i < 3:
             self.go(i + 1)

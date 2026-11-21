@@ -157,14 +157,14 @@ class GameModal(Overlay):
         btns = QHBoxLayout()
         btns.setSpacing(10)
         self.btn_play = QPushButton("  JOGAR")
-        self.btn_play.setIcon(theme.icon("play", "#ffffff"))
+        self.btn_play.setIcon(theme.icon("play", theme.DARK_TEXT))
         self.btn_play.setFixedSize(190, 50)
         self.btn_play.setCursor(Qt.PointingHandCursor)
         self.btn_play.setStyleSheet(
-            f"QPushButton {{ background: {theme.RED}; border: 1px solid {theme.RED}; color: white; font-size: 16px;"
-            " font-weight: 800; letter-spacing: 1px; border-radius: 10px; }"
-            f" QPushButton:hover {{ background: {theme.RED_HOVER}; }}"
-            " QPushButton:disabled { background: #4a1714; border-color: #4a1714; color: #d9b3b0; }")
+            f"QPushButton {{ background: {theme.SILVER_GRAD}; border: 1px solid #e4eaf1; color: {theme.DARK_TEXT};"
+            " font-size: 16px; font-weight: 800; letter-spacing: 1px; border-radius: 10px; }"
+            f" QPushButton:hover {{ background: {theme.SILVER_GRAD_HOVER}; }}"
+            " QPushButton:disabled { background: #3a4049; border-color: #3a4049; color: #9aa3ad; }")
         self.btn_play.clicked.connect(lambda: self.play_requested.emit(self.game, self.btn_fs.isChecked()))
         self.btn_fs = QPushButton("  Tela cheia")
         self.btn_fs.setObjectName("toggle")

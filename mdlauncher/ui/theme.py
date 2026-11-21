@@ -7,10 +7,18 @@ from PySide6.QtCore import QByteArray, QRectF, Qt
 from PySide6.QtGui import QColor, QIcon, QPainter, QPixmap
 from PySide6.QtSvg import QSvgRenderer
 
-RED = "#e2231a"        # vermelho Mega Drive
-RED_HOVER = "#ff3b30"
-GOLD = "#f5c542"
-BG = "#0a0a0c"
+# Prata com tons azulados — o cromado do logo "16-BIT" do Mega Drive
+ACCENT = "#a9bfd8"
+ACCENT_HOVER = "#c6d6e9"
+SILVER_HI = "#f1f4f8"
+SILVER = "#c9d2dd"
+SILVER_LO = "#8f9cad"
+DARK_TEXT = "#0c1118"
+WARN = "#e6c07b"
+LINK = "#b9cde4"
+SILVER_GRAD = f"qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 {SILVER_HI}, stop:0.55 {SILVER}, stop:1 #a3b1c2)"
+SILVER_GRAD_HOVER = "qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #ffffff, stop:0.55 #dce4ee, stop:1 #b7c4d4)"
+BG = "#0a0b0e"
 CARD = "#141418"
 CARD_2 = "#1b1b21"
 LINE = "#2a2a32"
@@ -28,27 +36,28 @@ QLabel#h2 {{ font-size: 17px; font-weight: 700; }}
 QLabel#section {{ color: {MUTED}; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }}
 QLineEdit, QComboBox, QSpinBox, QDoubleSpinBox, QPlainTextEdit {{
     background: #0f0f13; border: 1px solid {LINE}; border-radius: 8px; padding: 7px 10px;
-    selection-background-color: {RED};
+    selection-background-color: #4a5d75;
 }}
-QLineEdit:focus, QComboBox:focus, QSpinBox:focus, QDoubleSpinBox:focus {{ border-color: {RED}; }}
+QLineEdit:focus, QComboBox:focus, QSpinBox:focus, QDoubleSpinBox:focus {{ border-color: {ACCENT}; }}
 QComboBox::drop-down {{ border: none; width: 24px; }}
-QComboBox QAbstractItemView {{ background: #16161b; border: 1px solid {LINE}; selection-background-color: {RED}; }}
+QComboBox QAbstractItemView {{ background: #16161b; border: 1px solid {LINE}; selection-background-color: #3d4d61; }}
 QPushButton {{
     background: {CARD_2}; border: 1px solid {LINE}; border-radius: 8px; padding: 8px 14px; font-weight: 600;
 }}
 QPushButton:hover {{ background: #24242c; border-color: #3a3a46; }}
 QPushButton:pressed {{ background: #18181e; }}
 QPushButton:disabled {{ color: #5c5c66; }}
-QPushButton#primary {{ background: {RED}; border: 1px solid {RED}; color: white; }}
-QPushButton#primary:hover {{ background: {RED_HOVER}; }}
-QPushButton#primary:disabled {{ background: #5a1a17; border-color: #5a1a17; color: #c9a3a0; }}
-QPushButton#danger {{ color: #ff6b62; }}
+QPushButton#primary {{ background: {SILVER_GRAD}; border: 1px solid #dfe6ee; color: {DARK_TEXT}; }}
+QPushButton#primary:hover {{ background: {SILVER_GRAD_HOVER}; }}
+QPushButton#primary:disabled {{ background: #3a4049; border-color: #3a4049; color: #8a929c; }}
+QPushButton#danger {{ color: {SILVER}; }}
+QPushButton#danger:hover {{ border-color: {WARN}; color: {WARN}; }}
 QPushButton#ghost {{ background: transparent; border: none; }}
 QPushButton#ghost:hover {{ background: rgba(255,255,255,0.08); }}
-QPushButton#toggle:checked {{ background: rgba(226,35,26,0.18); border-color: {RED}; color: white; }}
+QPushButton#toggle:checked {{ background: rgba(169,191,216,0.20); border-color: {ACCENT}; color: white; }}
 QCheckBox {{ spacing: 8px; }}
 QCheckBox::indicator {{ width: 18px; height: 18px; border-radius: 5px; border: 1px solid #4a4a55; background: #0f0f13; }}
-QCheckBox::indicator:checked {{ background: {RED}; border-color: {RED}; image: url(:/check); }}
+QCheckBox::indicator:checked {{ background: {ACCENT}; border-color: {ACCENT}; image: url(:/check); }}
 QScrollBar:vertical {{ background: transparent; width: 10px; margin: 4px 2px; }}
 QScrollBar::handle:vertical {{ background: rgba(255,255,255,0.16); border-radius: 3px; min-height: 40px; }}
 QScrollBar::handle:vertical:hover {{ background: rgba(255,255,255,0.3); }}
@@ -56,19 +65,19 @@ QScrollBar:horizontal {{ background: transparent; height: 10px; margin: 2px 4px;
 QScrollBar::handle:horizontal {{ background: rgba(255,255,255,0.16); border-radius: 3px; min-width: 40px; }}
 QScrollBar::add-line, QScrollBar::sub-line, QScrollBar::add-page, QScrollBar::sub-page {{ background: none; height: 0; width: 0; }}
 QSlider::groove:horizontal {{ height: 4px; background: rgba(255,255,255,0.18); border-radius: 2px; }}
-QSlider::sub-page:horizontal {{ background: {RED}; border-radius: 2px; }}
+QSlider::sub-page:horizontal {{ background: {ACCENT}; border-radius: 2px; }}
 QSlider::handle:horizontal {{ background: white; width: 14px; height: 14px; margin: -5px 0; border-radius: 7px; }}
 QProgressBar {{ background: #0f0f13; border: 1px solid {LINE}; border-radius: 6px; height: 10px; text-align: center; font-size: 10px; }}
-QProgressBar::chunk {{ background: {RED}; border-radius: 5px; }}
+QProgressBar::chunk {{ background: {ACCENT}; border-radius: 5px; }}
 QListWidget {{ background: #0f0f13; border: 1px solid {LINE}; border-radius: 8px; padding: 6px; }}
 QListWidget::item {{ border-radius: 6px; padding: 4px; }}
-QListWidget::item:selected {{ background: rgba(226,35,26,0.25); border: 2px solid {RED}; }}
+QListWidget::item:selected {{ background: rgba(169,191,216,0.22); border: 2px solid {ACCENT}; }}
 QListWidget::item:hover {{ background: rgba(255,255,255,0.06); }}
 QScrollArea {{ background: transparent; border: none; }}
 QScrollArea > QWidget > QWidget {{ background: transparent; }}
 QMenu {{ background: #17171c; border: 1px solid {LINE}; border-radius: 8px; padding: 6px; }}
 QMenu::item {{ padding: 7px 18px; border-radius: 5px; }}
-QMenu::item:selected {{ background: {RED}; }}
+QMenu::item:selected {{ background: rgba(169,191,216,0.25); }}
 QMenu::separator {{ height: 1px; background: {LINE}; margin: 5px 8px; }}
 """
 
