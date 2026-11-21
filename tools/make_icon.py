@@ -46,6 +46,7 @@ d.text((x, y), "MD", font=font, fill=(10, 12, 16, 255))
 
 out = Path(__file__).resolve().parent.parent / "assets"
 out.mkdir(exist_ok=True)
+img.save(out / "icon-1024.png")
 img.resize((512, 512), Image.LANCZOS).save(out / "icon.png")
 img.save(out / "icon.ico", sizes=[(16, 16), (24, 24), (32, 32), (48, 48), (64, 64), (128, 128), (256, 256)])
 print("ok")

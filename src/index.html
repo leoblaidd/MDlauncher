@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MD Launcher</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- grid de capas: ocupa a janela inteira, as capas passam por baixo do logo e do dock -->
+  <main id="grid" tabindex="-1">
+    <div id="cards"></div>
+    <div id="empty" hidden></div>
+  </main>
+
+  <!-- logo em caixa prata: arrastar move a janela, duplo clique maximiza -->
+  <div id="logo" data-tauri-drag-region title="Arraste para mover · duplo clique para maximizar">MD Launcher</div>
+  <div id="status" hidden></div>
+
+  <!-- botões da janela (padrão Windows) -->
+  <div id="winctl">
+    <button class="cap" id="btn-min" title="Minimizar"><svg viewBox="0 0 10 10"><path d="M0 5.5h10"/></svg></button>
+    <button class="cap" id="btn-max" title="Maximizar"><svg viewBox="0 0 10 10"><rect x=".5" y=".5" width="9" height="9"/></svg></button>
+    <button class="cap close" id="btn-close" title="Fechar"><svg viewBox="0 0 10 10"><path d="M0 0l10 10M10 0L0 10"/></svg></button>
+  </div>
+
+  <!-- dock flutuante com efeito de vidro -->
+  <nav id="dock">
+    <label class="search">
+      <span class="ico" data-icon="search"></span>
+      <input id="search" type="text" placeholder="Pesquisar jogos…" autocomplete="off" spellcheck="false">
+      <button id="search-clear" title="Limpar" hidden><span data-icon="close"></span></button>
+    </label>
+    <span class="sep"></span>
+    <button class="dbtn" id="d-add" title="Adicionar jogo manualmente"><span data-icon="add"></span></button>
+    <button class="dbtn" id="d-emu" title="Abrir o emulador sem jogo"><span data-icon="gamepad"></span></button>
+    <button class="dbtn" id="d-roms" title="Abrir a pasta de ROMs"><span data-icon="folder"></span></button>
+    <span class="sep"></span>
+    <div class="size" title="Tamanho das capas">
+      <span data-icon="grid_small" class="sm"></span>
+      <input id="size" type="range" min="110" max="300" step="1">
+      <span data-icon="grid_big" class="bg"></span>
+    </div>
+    <span class="sep"></span>
+    <button class="dbtn" id="d-cfg" title="Configurações"><span data-icon="settings"></span></button>
+  </nav>
+
+  <!-- bordas para redimensionar a janela sem moldura -->
+  <div class="rz n" data-dir="North"></div><div class="rz s" data-dir="South"></div>
+  <div class="rz e" data-dir="East"></div><div class="rz w" data-dir="West"></div>
+  <div class="rz ne" data-dir="NorthEast"></div><div class="rz nw" data-dir="NorthWest"></div>
+  <div class="rz se" data-dir="SouthEast"></div><div class="rz sw" data-dir="SouthWest"></div>
+
+  <div id="layers"></div>
+  <script src="icons.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

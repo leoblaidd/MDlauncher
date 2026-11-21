@@ -5,3 +5,6 @@ dist/
 installer/Output/
 *.spec
 .venv/
+node_modules/
+src-tauri/target/
+src-tauri/gen/

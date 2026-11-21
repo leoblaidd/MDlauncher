@@ -25,54 +25,49 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-node@v4
         with:
-          python-version: "3.12"
+          node-version: 22
 
-      - name: Dependências
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt pyinstaller
+      - uses: dtolnay/rust-toolchain@stable
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: src-tauri
 
       - name: Versão
         id: ver
         shell: bash
-        run: |
-          V=$(python -c "import mdlauncher; print(mdlauncher.__version__)")
-          echo "version=$V" >> "$GITHUB_OUTPUT"
+        run: echo "version=$(node -p "require('./src-tauri/tauri.conf.json').version")" >> "$GITHUB_OUTPUT"
 
-      - name: PyInstaller
-        run: >
-          pyinstaller --noconfirm --clean --windowed --name MDLauncher
-          --icon assets/icon.ico --add-data "assets;assets"
-          --exclude-module tkinter
-          --exclude-module PySide6.QtWebEngineCore --exclude-module PySide6.QtWebEngineWidgets
-          --exclude-module PySide6.Qt3DCore --exclude-module PySide6.QtQuick --exclude-module PySide6.QtQml
-          --exclude-module PySide6.QtMultimedia --exclude-module PySide6.QtCharts --exclude-module PySide6.QtDataVisualization
-          --exclude-module PySide6.QtPdf --exclude-module PySide6.QtSql --exclude-module PySide6.QtNetwork
-          run.py
+      - name: Dependências
+        run: npm ci
+
+      - name: Build (Tauri + instalador NSIS)
+        run: npx tauri build
 
       - name: Teste do executável
         shell: pwsh
         run: |
           $env:MDLAUNCHER_HOME = "$env:RUNNER_TEMP\mdl-selftest"
-          $p = Start-Process -FilePath "dist\MDLauncher\MDLauncher.exe" -ArgumentList "--selftest" -Wait -PassThru
+          $p = Start-Process -FilePath "src-tauri\target\release\MDLauncher.exe" -ArgumentList "--selftest" -Wait -PassThru
           Write-Host "Saída: $($p.ExitCode)"
           if ($p.ExitCode -ne 0) { exit 1 }
 
-      - name: Inno Setup
-        run: |
-          choco install innosetup --no-progress -y
-          & "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe" /DAppVersion=${{ steps.ver.outputs.version }} installer\MDLauncher.iss
-
-      - name: Versão portátil (.zip)
+      - name: Organizar arquivos
         shell: pwsh
-        run: Compress-Archive -Path dist\MDLauncher\* -DestinationPath "installer\Output\MDLauncher-${{ steps.ver.outputs.version }}-Portable.zip"
+        run: |
+          $v = "${{ steps.ver.outputs.version }}"
+          New-Item -ItemType Directory -Force out | Out-Null
+          $setup = Get-ChildItem "src-tauri\target\release\bundle\nsis\*-setup.exe" | Select-Object -First 1
+          Copy-Item $setup.FullName "out\MDLauncher-$v-Setup.exe"
+          Copy-Item "src-tauri\target\release\MDLauncher.exe" "out\MDLauncher-$v-Portable.exe"
+          Get-ChildItem out
 
       - uses: actions/upload-artifact@v4
         with:
           name: MDLauncher-${{ steps.ver.outputs.version }}
-          path: installer/Output/*
+          path: out/*
 
       - name: Publicar release
         if: startsWith(github.ref, 'refs/tags/') || inputs.publish
@@ -83,4 +78,4 @@ jobs:
           name: MD Launcher ${{ steps.ver.outputs.version }}
           make_latest: true
           body_path: RELEASE_NOTES.md
-          files: installer/Output/*
+          files: out/*

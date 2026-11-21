@@ -5,8 +5,8 @@
 <h1 align="center">MD Launcher</h1>
 
 <p align="center">
-  Launcher em Qt para a sua coleção de <b>Mega Drive / Genesis</b>, no estilo DuckStation, PCSX2 e RPCS3,<br>
-  funcionando com <b>qualquer emulador</b>.
+  Launcher para a sua coleção de <b>Mega Drive / Genesis</b>, no estilo DuckStation, PCSX2 e RPCS3,<br>
+  funcionando com <b>qualquer emulador</b>. Feito com <b>Tauri 2</b> (Rust + HTML).
 </p>
 
 <p align="center">
@@ -57,12 +57,15 @@ emulador favorito abre o jogo.
 
 ## Instalação
 
-1. Baixe o `MDLauncher-1.1.0-Setup.exe` na página de [Releases](https://github.com/leoblaidd/MDlauncher/releases/latest).
+1. Baixe o `MDLauncher-2.0.0-Setup.exe` na página de [Releases](https://github.com/leoblaidd/MDlauncher/releases/latest).
 2. Execute o instalador e escolha a pasta de instalação.
 3. Abra o MD Launcher. O assistente pede:
    - o **.exe do emulador**;
    - a **pasta das ROMs**;
    - a **chave do SteamGridDB** (e, se quiser, as credenciais do IGDB).
+
+> Também há o `MDLauncher-2.0.0-Portable.exe`, que roda sem instalar. Ele usa o WebView2, que já vem no
+> Windows 10 e 11.
 
 > O Windows SmartScreen pode avisar que o app não é reconhecido, porque o executável não tem assinatura
 > digital. Clique em **Mais informações → Executar assim mesmo**.
@@ -96,6 +99,12 @@ Cada jogo pode ter emulador e argumentos próprios na tela de edição.
 
 Se o seu emulador não abre `.zip`, ligue **Extrair ROMs de .zip antes de abrir** em Configurações.
 
+### Atualizando da 1.x
+
+A 2.0 usa a mesma pasta de dados e o mesmo formato da 1.x, então sua biblioteca, as capas e o tempo jogado
+continuam lá. O instalador novo é diferente do antigo: depois de instalar a 2.0, desinstale o "MD Launcher 1.x"
+em **Configurações do Windows → Aplicativos**. Isso não apaga seus dados.
+
 ## Onde ficam os dados
 
 `%APPDATA%\MDLauncher\`
@@ -105,45 +114,47 @@ Se o seu emulador não abre `.zip`, ligue **Extrair ROMs de .zip antes de abrir*
 
 ## Rodar a partir do código
 
+Precisa do [Rust](https://rustup.rs), do Node.js e, no Windows, do WebView2 (já vem no sistema).
+
 ```bash
-pip install -r requirements.txt
-python run.py
+npm install
+npx tauri dev
 ```
 
 ### Gerar o executável
 
-O workflow [`build.yml`](.github/workflows/build.yml) faz o build no Windows com **PyInstaller** e
-**Inno Setup** e anexa o instalador e o `.zip` portátil à release. Ele roda quando uma tag `v*` é enviada ou
-quando uma release é publicada no GitHub:
+O workflow [`build.yml`](.github/workflows/build.yml) compila no Windows, gera o instalador NSIS, testa o
+executável (`--selftest`) e anexa o instalador e o `.exe` portátil à release. Ele roda quando uma tag `v*` é
+enviada, quando uma release é publicada ou manualmente (com a opção **publish**).
+
+Na sua máquina:
 
 ```bash
-git tag v1.0.1 && git push origin v1.0.1
+npx tauri build
 ```
 
-Para fazer na sua máquina (Windows):
-
-```powershell
-pip install -r requirements.txt pyinstaller
-pyinstaller --noconfirm --windowed --name MDLauncher --icon assets/icon.ico --add-data "assets;assets" run.py
-& "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe" installer\MDLauncher.iss
-```
+O instalador sai em `src-tauri/target/release/bundle/nsis/`.
 
 ## Estrutura
 
 ```
-mdlauncher/
-  app.py            ponto de entrada
-  storage.py        configurações e biblioteca (JSON)
-  scanner.py        identificação de ROMs de Mega Drive e .zip
-  metadata.py       SteamGridDB, IGDB e Libretro
-  emulators.py      perfis de emulador, tela cheia e execução
-  ui/               janela, grid, dock e modais (PySide6 / Qt 6)
-installer/          script do Inno Setup
+src/                interface (HTML, CSS e JavaScript, sem build)
+  index.html        janela, grid, dock, logo e botões
+  styles.css        visual (fundo com grade, prata com tons azulados, vidro do dock)
+  app.js            grid, rolagem suave, modais, assistente, busca e menu
+  icons.js          ícones SVG
+src-tauri/          backend em Rust (Tauri 2)
+  src/lib.rs        comandos chamados pela interface
+  src/storage.rs    configurações e biblioteca (JSON)
+  src/scanner.rs    identificação de ROMs de Mega Drive e .zip
+  src/metadata.rs   SteamGridDB, IGDB e Libretro
+  src/emulators.rs  linha de comando, tela cheia e execução
+  tauri.conf.json   janela e instalador
 ```
 
 ## Créditos
 
 - Artes: [SteamGridDB](https://www.steamgriddb.com), [IGDB](https://www.igdb.com) e [Libretro Thumbnails](https://thumbnails.libretro.com).
-- Interface feita com [Qt for Python (PySide6)](https://doc.qt.io/qtforpython-6/).
+- Feito com [Tauri](https://tauri.app) (Rust + WebView2). As versões 1.x usavam Python e Qt (PySide6).
 - Mega Drive e Sega são marcas da SEGA. Este projeto não tem ligação com a SEGA e não distribui ROMs: use as cópias
   dos seus próprios cartuchos.
