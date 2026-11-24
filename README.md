@@ -152,6 +152,12 @@ src-tauri/          backend em Rust (Tauri 2)
   tauri.conf.json   janela e instalador
 ```
 
+## ☕ Apoie
+
+O MD Launcher é gratuito e vai continuar sendo. Se ele te ajudou e você quiser dar uma força, dá pra me pagar um café no **[Ko-fi](https://ko-fi.com/leoblaidd)**. 💜
+
+[![Apoie no Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/leoblaidd)
+
 ## Créditos
 
 - Artes: [SteamGridDB](https://www.steamgriddb.com), [IGDB](https://www.igdb.com) e [Libretro Thumbnails](https://thumbnails.libretro.com).
