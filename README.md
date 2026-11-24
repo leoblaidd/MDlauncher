@@ -5,162 +5,168 @@
 <h1 align="center">MD Launcher</h1>
 
 <p align="center">
-  Launcher para a sua coleção de <b>Mega Drive / Genesis</b>, no estilo DuckStation, PCSX2 e RPCS3,<br>
-  funcionando com <b>qualquer emulador</b>. Feito com <b>Tauri 2</b> (Rust + HTML).
+  <b>🇺🇸 English</b> | <a href="README.pt-BR.md">🇧🇷 Português</a>
 </p>
 
 <p align="center">
-  <a href="https://github.com/leoblaidd/MDlauncher/releases/latest"><b>⬇ Baixar a última versão</b></a>
+  A launcher for your <b>Mega Drive / Genesis</b> collection, in the style of DuckStation, PCSX2 and RPCS3,<br>
+  that works with <b>any emulator</b>. Built with <b>Tauri 2</b> (Rust + HTML).
 </p>
 
-![Biblioteca](docs/biblioteca.png)
+<p align="center">
+  <a href="https://github.com/leoblaidd/MDlauncher/releases/latest"><b>⬇ Download the latest version</b></a>
+</p>
 
-> As capas das imagens acima são de exemplo. No uso real, elas vêm do SteamGridDB, do IGDB ou do Libretro.
+![Library](docs/biblioteca.png)
 
-## Por que existe
+> The covers in the images above are examples. In real use, they come from SteamGridDB, IGDB or Libretro.
 
-Os emuladores de Mega Drive rodam muito bem, mas nenhum tem uma biblioteca bonita com capas, tempo de jogo e
-informações. O MD Launcher é só isso: uma tela com as capas dos seus jogos. Você clica, dá play e o seu
-emulador favorito abre o jogo.
+> The app's interface is in **Brazilian Portuguese**.
 
-## Recursos
+## Why it exists
 
-- **Interface limpa, sem barra de título:** fundo escuro com a grade discreta das caixas de Mega Drive e
-  paleta prata com tons azulados. As capas vão até as bordas da janela e passam por baixo do logo e do dock.
-- **Logo em caixa prata** no canto superior esquerdo: arraste para mover a janela, dois cliques maximizam.
-- **Botões minimizar, maximizar e fechar** no padrão do Windows, à direita, numa caixa prata escura.
-- **Grid de capas** com rolagem suave e zoom ajustável pelo controle deslizante do dock.
-- **Modal do jogo** com hero estilo Steam no topo, capa sobreposta, nome, data de lançamento, multiplayer,
-  desenvolvedora e **contador de horas jogadas**.
-- **Botão Jogar + Tela cheia:** o botão de tela cheia adiciona o argumento certo para o seu emulador (veja a tabela).
-- **Funciona com qualquer emulador:** você escolhe o `.exe` e, se quiser, o modelo de argumentos.
-- **Detecção de ROMs:** `.md`, `.gen`, `.smd`, `.bin`, `.68k`, `.sgd`, `.mdx` e `.zip` com a ROM dentro. Arquivos
-  `.bin` são checados pelo cabeçalho `SEGA` para não confundir com ROMs de outros consoles.
-- **Capas, heroes e informações automáticas:**
-  1. **SteamGridDB:** capa (grid 600×900) e hero.
-  2. **IGDB:** data de lançamento, multiplayer, número de jogadores, desenvolvedora e artes que faltarem.
-  3. **Libretro Thumbnails:** box art e tela de título, sem precisar de chave (fallback).
-- **Editor completo:** nome, data, multiplayer, jogadores, desenvolvedora, tempo jogado, caminho da ROM/ZIP,
-  emulador e argumentos específicos do jogo. Para as artes, escolha a fonte (SteamGridDB, IGDB ou Libretro),
-  busque, veja as opções em miniatura e clique para definir. Também dá para usar um arquivo local.
-- **Dock flutuante com efeito de vidro** (as capas aparecem desfocadas por trás): pesquisa de jogos
-  (`Ctrl+F`) · adicionar jogo manualmente · abrir o emulador sem jogo · abrir a pasta de ROMs ·
-  tamanho das capas · configurações.
-- **Menu de contexto** no grid (botão direito): jogar, editar, mostrar no Explorer, buscar artes de novo e remover.
-- **Assistente de primeira execução:** emulador → pasta de ROMs → chaves de API.
-- **Janela volta do jeito que estava** quando você sai do jogo, maximizada ou não.
-- **Instalador** que pergunta onde instalar, além de uma versão portátil em `.zip`.
+Mega Drive emulators run really well, but none of them has a nice library with covers, play time and
+info. MD Launcher is just that: a screen with your games' covers. You click, hit play and your
+favorite emulator opens the game.
 
-| Modal do jogo | Edição |
+## Features
+
+- **Clean interface, no title bar:** dark background with the subtle grid of Mega Drive boxes and a
+  silver palette with bluish tones. Covers reach the edges of the window and pass under the logo and the dock.
+- **Logo in a silver box** in the top-left corner: drag it to move the window, double-click to maximize.
+- **Minimize, maximize and close buttons** in the Windows style, on the right, in a dark silver box.
+- **Cover grid** with smooth scrolling and zoom adjustable with the dock's slider.
+- **Game modal** with a Steam-style hero at the top, an overlapping cover, name, release date, multiplayer,
+  developer and a **played-hours counter**.
+- **Play + Fullscreen button:** the fullscreen button adds the right argument for your emulator (see the table).
+- **Works with any emulator:** you pick the `.exe` and, if you want, the argument template.
+- **ROM detection:** `.md`, `.gen`, `.smd`, `.bin`, `.68k`, `.sgd`, `.mdx` and `.zip` with the ROM inside. `.bin`
+  files are checked for the `SEGA` header so they aren't confused with ROMs from other consoles.
+- **Automatic covers, heroes and info:**
+  1. **SteamGridDB:** cover (600×900 grid) and hero.
+  2. **IGDB:** release date, multiplayer, number of players, developer and any missing art.
+  3. **Libretro Thumbnails:** box art and title screen, no key needed (fallback).
+- **Full editor:** name, date, multiplayer, players, developer, play time, ROM/ZIP path,
+  emulator and game-specific arguments. For art, pick the source (SteamGridDB, IGDB or Libretro),
+  search, see the options as thumbnails and click to set one. You can also use a local file.
+- **Floating dock with a glass effect** (covers show blurred behind it): game search
+  (`Ctrl+F`) · add a game manually · open the emulator without a game · open the ROM folder ·
+  cover size · settings.
+- **Context menu** on the grid (right click): play, edit, show in Explorer, fetch art again and remove.
+- **First-run wizard:** emulator → ROM folder → API keys.
+- **The window comes back the way it was** when you quit the game, maximized or not.
+- **Installer** that asks where to install, plus a portable version.
+
+| Game modal | Editing |
 |---|---|
-| ![Jogo](docs/jogo.png) | ![Editar](docs/editar.png) |
+| ![Game](docs/jogo.png) | ![Edit](docs/editar.png) |
 
-## Instalação
+## Installation
 
-1. Baixe o `MDLauncher-2.0.0-Setup.exe` na página de [Releases](https://github.com/leoblaidd/MDlauncher/releases/latest).
-2. Execute o instalador e escolha a pasta de instalação.
-3. Abra o MD Launcher. O assistente pede:
-   - o **.exe do emulador**;
-   - a **pasta das ROMs**;
-   - a **chave do SteamGridDB** (e, se quiser, as credenciais do IGDB).
+1. Download `MDLauncher-2.0.0-Setup.exe` from the [Releases](https://github.com/leoblaidd/MDlauncher/releases/latest) page.
+2. Run the installer and choose the install folder.
+3. Open MD Launcher. The wizard asks for:
+   - the **emulator's .exe**;
+   - the **ROM folder**;
+   - the **SteamGridDB key** (and, if you want, the IGDB credentials).
 
-> Também há o `MDLauncher-2.0.0-Portable.exe`, que roda sem instalar. Ele usa o WebView2, que já vem no
-> Windows 10 e 11.
+> There's also `MDLauncher-2.0.0-Portable.exe`, which runs without installing. It uses WebView2, which ships with
+> Windows 10 and 11.
 
-> O Windows SmartScreen pode avisar que o app não é reconhecido, porque o executável não tem assinatura
-> digital. Clique em **Mais informações → Executar assim mesmo**.
+> Windows SmartScreen may warn that the app isn't recognized, because the executable has no digital
+> signature. Click **More info → Run anyway**.
 
-### Chaves de API
+### API keys
 
-| Fonte | Para quê | Como conseguir |
+| Source | What for | How to get it |
 |---|---|---|
-| SteamGridDB | Capas e heroes | Crie uma conta em [steamgriddb.com](https://www.steamgriddb.com) e gere a chave em **Preferences → API**. |
-| IGDB (opcional) | Data, multiplayer, desenvolvedora e artes extras | Registre um app no [Twitch Developers](https://dev.twitch.tv/console/apps) e use o **Client ID** e o **Client Secret** ([guia](https://api-docs.igdb.com/#account-creation)). |
-| Libretro | Box art e tela de título | Não precisa de chave. |
+| SteamGridDB | Covers and heroes | Create an account at [steamgriddb.com](https://www.steamgriddb.com) and generate the key under **Preferences → API**. |
+| IGDB (optional) | Date, multiplayer, developer and extra art | Register an app at [Twitch Developers](https://dev.twitch.tv/console/apps) and use the **Client ID** and **Client Secret** ([guide](https://api-docs.igdb.com/#account-creation)). |
+| Libretro | Box art and title screen | No key needed. |
 
-## Emuladores e tela cheia
+## Emulators and fullscreen
 
-Quando você escolhe o `.exe`, o launcher reconhece os emuladores abaixo e já preenche o modelo de argumentos e o
-argumento de tela cheia:
+When you pick the `.exe`, the launcher recognizes the emulators below and fills in the argument template and the
+fullscreen argument for you:
 
-| Emulador | Tela cheia | Modelo sugerido | Observação |
+| Emulator | Fullscreen | Suggested template | Note |
 |---|---|---|---|
-| RetroArch | `-f` | `-L "cores\genesis_plus_gx_libretro.dll" {fullscreen} "{rom}"` | Troque o core se usar PicoDrive ou BlastEm. |
-| Kega Fusion | `-fullscreen` | `-gen -auto {fullscreen} "{rom}"` | Em tela cheia, ESC fecha o emulador. |
-| BlastEm | `-f` | `{fullscreen} "{rom}"` | O `-f` **alterna** o modo: se o `blastem.cfg` já estiver em fullscreen, abre em janela. |
+| RetroArch | `-f` | `-L "cores\genesis_plus_gx_libretro.dll" {fullscreen} "{rom}"` | Change the core if you use PicoDrive or BlastEm. |
+| Kega Fusion | `-fullscreen` | `-gen -auto {fullscreen} "{rom}"` | In fullscreen, ESC closes the emulator. |
+| BlastEm | `-f` | `{fullscreen} "{rom}"` | `-f` **toggles** the mode: if `blastem.cfg` is already set to fullscreen, it opens windowed. |
 | ares | `--fullscreen` | `--system "Mega Drive" {fullscreen} "{rom}"` | |
 | Mednafen | `-video.fs 1` | `{fullscreen} "{rom}"` | |
-| Gens/GS | `--fs --quickexit` | `{fullscreen} "{rom}"` | `--quickexit` faz o ESC fechar o emulador. |
+| Gens/GS | `--fs --quickexit` | `{fullscreen} "{rom}"` | `--quickexit` makes ESC close the emulator. |
 | DGen | `-f` | `{fullscreen} "{rom}"` | |
-| Outros | *(você informa)* | `{fullscreen} "{rom}"` | Qualquer emulador que aceite a ROM pela linha de comando. |
+| Others | *(you provide it)* | `{fullscreen} "{rom}"` | Any emulator that takes the ROM on the command line. |
 
-`{rom}` vira o caminho do arquivo e `{fullscreen}` vira o argumento de tela cheia quando o botão estiver ligado.
-Cada jogo pode ter emulador e argumentos próprios na tela de edição.
+`{rom}` becomes the file path and `{fullscreen}` becomes the fullscreen argument when the button is on.
+Each game can have its own emulator and arguments in the edit screen.
 
-Se o seu emulador não abre `.zip`, ligue **Extrair ROMs de .zip antes de abrir** em Configurações.
+If your emulator can't open `.zip` files, turn on **Extrair ROMs de .zip antes de abrir** (Extract ROMs from .zip before opening) in Settings.
 
-### Atualizando da 1.x
+### Updating from 1.x
 
-A 2.0 usa a mesma pasta de dados e o mesmo formato da 1.x, então sua biblioteca, as capas e o tempo jogado
-continuam lá. O instalador novo é diferente do antigo: depois de instalar a 2.0, desinstale o "MD Launcher 1.x"
-em **Configurações do Windows → Aplicativos**. Isso não apaga seus dados.
+2.0 uses the same data folder and the same format as 1.x, so your library, covers and play time
+are still there. The new installer is different from the old one: after installing 2.0, uninstall "MD Launcher 1.x"
+in **Windows Settings → Apps**. This doesn't delete your data.
 
-## Onde ficam os dados
+## Where the data lives
 
 `%APPDATA%\MDLauncher\`
-- `settings.json`: configurações
-- `library.json`: biblioteca, tempos de jogo e edições
-- `cache\`: capas e heroes baixados
+- `settings.json`: settings
+- `library.json`: library, play times and edits
+- `cache\`: downloaded covers and heroes
 
-## Rodar a partir do código
+## Running from source
 
-Precisa do [Rust](https://rustup.rs), do Node.js e, no Windows, do WebView2 (já vem no sistema).
+You need [Rust](https://rustup.rs), Node.js and, on Windows, WebView2 (already included in the system).
 
 ```bash
 npm install
 npx tauri dev
 ```
 
-### Gerar o executável
+### Building the executable
 
-O workflow [`build.yml`](.github/workflows/build.yml) compila no Windows, gera o instalador NSIS, testa o
-executável (`--selftest`) e anexa o instalador e o `.exe` portátil à release. Ele roda quando uma tag `v*` é
-enviada, quando uma release é publicada ou manualmente (com a opção **publish**).
+The [`build.yml`](.github/workflows/build.yml) workflow builds on Windows, creates the NSIS installer, tests the
+executable (`--selftest`) and attaches the installer and the portable `.exe` to the release. It runs when a `v*` tag is
+pushed, when a release is published, or manually (with the **publish** option).
 
-Na sua máquina:
+On your machine:
 
 ```bash
 npx tauri build
 ```
 
-O instalador sai em `src-tauri/target/release/bundle/nsis/`.
+The installer ends up in `src-tauri/target/release/bundle/nsis/`.
 
-## Estrutura
+## Structure
 
 ```
-src/                interface (HTML, CSS e JavaScript, sem build)
-  index.html        janela, grid, dock, logo e botões
-  styles.css        visual (fundo com grade, prata com tons azulados, vidro do dock)
-  app.js            grid, rolagem suave, modais, assistente, busca e menu
-  icons.js          ícones SVG
-src-tauri/          backend em Rust (Tauri 2)
-  src/lib.rs        comandos chamados pela interface
-  src/storage.rs    configurações e biblioteca (JSON)
-  src/scanner.rs    identificação de ROMs de Mega Drive e .zip
-  src/metadata.rs   SteamGridDB, IGDB e Libretro
-  src/emulators.rs  linha de comando, tela cheia e execução
-  tauri.conf.json   janela e instalador
+src/                interface (HTML, CSS and JavaScript, no build step)
+  index.html        window, grid, dock, logo and buttons
+  styles.css        look (grid background, silver with bluish tones, dock glass)
+  app.js            grid, smooth scrolling, modals, wizard, search and menu
+  icons.js          SVG icons
+src-tauri/          Rust backend (Tauri 2)
+  src/lib.rs        commands called by the interface
+  src/storage.rs    settings and library (JSON)
+  src/scanner.rs    Mega Drive ROM and .zip detection
+  src/metadata.rs   SteamGridDB, IGDB and Libretro
+  src/emulators.rs  command line, fullscreen and launching
+  tauri.conf.json   window and installer
 ```
 
-## ☕ Apoie
+## ☕ Support
 
-O MD Launcher é gratuito e vai continuar sendo. Se ele te ajudou e você quiser dar uma força, dá pra me pagar um café no **[Ko-fi](https://ko-fi.com/leoblaidd)**. 💜
+MD Launcher is free and will stay that way. If it helped you and you'd like to give something back, you can buy me a coffee on **[Ko-fi](https://ko-fi.com/leoblaidd)**. 💜
 
-[![Apoie no Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/leoblaidd)
+[![Support me on Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/leoblaidd)
 
-## Créditos
+## Credits
 
-- Artes: [SteamGridDB](https://www.steamgriddb.com), [IGDB](https://www.igdb.com) e [Libretro Thumbnails](https://thumbnails.libretro.com).
-- Feito com [Tauri](https://tauri.app) (Rust + WebView2). As versões 1.x usavam Python e Qt (PySide6).
-- Mega Drive e Sega são marcas da SEGA. Este projeto não tem ligação com a SEGA e não distribui ROMs: use as cópias
-  dos seus próprios cartuchos.
+- Art: [SteamGridDB](https://www.steamgriddb.com), [IGDB](https://www.igdb.com) and [Libretro Thumbnails](https://thumbnails.libretro.com).
+- Built with [Tauri](https://tauri.app) (Rust + WebView2). Versions 1.x used Python and Qt (PySide6).
+- Mega Drive and Sega are trademarks of SEGA. This project is not affiliated with SEGA and does not distribute ROMs: use copies
+  of your own cartridges.
